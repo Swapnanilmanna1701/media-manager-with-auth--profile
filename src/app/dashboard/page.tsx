@@ -286,8 +286,8 @@ export default function DashboardPage() {
 
   if (isPending || isInitialLoading) {
     return (
-      <div className="min-h-screen netflix-gradient flex items-center justify-center">
-        <Loader2 className="w-12 h-12 text-red-500 animate-spin" />
+      <div className="min-h-screen light-gradient flex items-center justify-center">
+        <Loader2 className="w-12 h-12 text-blue-600 animate-spin" />
       </div>
     );
   }
@@ -295,21 +295,21 @@ export default function DashboardPage() {
   if (!session?.user) return null;
 
   return (
-    <div className="min-h-screen netflix-gradient">
+    <div className="min-h-screen light-gradient">
       <Navbar />
       
       <div className="container mx-auto px-4 pt-24 pb-12">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-4xl font-bold text-white mb-2">My Collection</h1>
-            <p className="text-gray-400">Manage your favorite movies and TV shows</p>
+            <h1 className="text-4xl font-bold gradient-text mb-2">My Collection</h1>
+            <p className="text-gray-600">Manage your favorite movies and TV shows</p>
           </div>
           <Button
             onClick={() => {
               resetForm();
               setIsAddDialogOpen(true);
             }}
-            className="bg-red-600 hover:bg-red-700 text-white"
+            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white btn-animated"
           >
             <Plus className="w-5 h-5 mr-2" />
             Add Entry
@@ -317,83 +317,83 @@ export default function DashboardPage() {
         </div>
 
         {entries.length === 0 && !isLoading ? (
-          <Card className="bg-black/60 border-white/10 p-12 text-center">
-            <Film className="w-16 h-16 text-gray-500 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-white mb-2">No entries yet</h2>
-            <p className="text-gray-400 mb-6">Start building your collection by adding your first movie or TV show</p>
+          <Card className="bg-white border-gray-200 p-12 text-center">
+            <Film className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+            <h2 className="text-2xl font-bold gradient-text mb-2">No entries yet</h2>
+            <p className="text-gray-600 mb-6">Start building your collection by adding your first movie or TV show</p>
             <Button
               onClick={() => {
                 resetForm();
                 setIsAddDialogOpen(true);
               }}
-              className="bg-red-600 hover:bg-red-700 text-white"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white btn-animated"
             >
               <Plus className="w-5 h-5 mr-2" />
               Add Your First Entry
             </Button>
           </Card>
         ) : (
-          <Card className="bg-black/60 border-white/10 overflow-hidden">
+          <Card className="bg-white border-gray-200 overflow-hidden">
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
-                  <TableRow className="border-white/10 hover:bg-white/5">
-                    <TableHead className="text-gray-400 w-20">Poster</TableHead>
-                    <TableHead className="text-gray-400">Title</TableHead>
-                    <TableHead className="text-gray-400">Type</TableHead>
-                    <TableHead className="text-gray-400">Director</TableHead>
-                    <TableHead className="text-gray-400">Genre</TableHead>
-                    <TableHead className="text-gray-400">Budget</TableHead>
-                    <TableHead className="text-gray-400">Duration</TableHead>
-                    <TableHead className="text-gray-400">Rating</TableHead>
-                    <TableHead className="text-gray-400">Actions</TableHead>
+                  <TableRow className="border-gray-200 hover:bg-gray-50">
+                    <TableHead className="text-gray-700 font-bold w-20">Poster</TableHead>
+                    <TableHead className="text-gray-700 font-bold">Title</TableHead>
+                    <TableHead className="text-gray-700 font-bold">Type</TableHead>
+                    <TableHead className="text-gray-700 font-bold">Director</TableHead>
+                    <TableHead className="text-gray-700 font-bold">Genre</TableHead>
+                    <TableHead className="text-gray-700 font-bold">Budget</TableHead>
+                    <TableHead className="text-gray-700 font-bold">Duration</TableHead>
+                    <TableHead className="text-gray-700 font-bold">Rating</TableHead>
+                    <TableHead className="text-gray-700 font-bold">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {entries.map((entry) => (
-                    <TableRow key={entry.id} className="border-white/10 hover:bg-white/5">
+                    <TableRow key={entry.id} className="border-gray-200 hover:bg-gray-50">
                       <TableCell>
                         {entry.imageUrl ? (
                           <img
                             src={entry.imageUrl}
                             alt={entry.title}
-                            className="w-12 h-12 object-cover rounded border border-white/10"
+                            className="w-12 h-12 object-cover rounded border border-gray-200"
                           />
                         ) : (
-                          <div className="w-12 h-12 bg-white/5 rounded border border-white/10 flex items-center justify-center">
-                            <ImageIcon className="w-6 h-6 text-gray-500" />
+                          <div className="w-12 h-12 bg-gray-100 rounded border border-gray-200 flex items-center justify-center">
+                            <ImageIcon className="w-6 h-6 text-gray-400" />
                           </div>
                         )}
                       </TableCell>
-                      <TableCell className="font-medium text-white">{entry.title}</TableCell>
+                      <TableCell className="font-bold gradient-text">{entry.title}</TableCell>
                       <TableCell>
                         <Badge variant={entry.type === "movie" ? "default" : "secondary"} className="flex items-center gap-1 w-fit">
                           {entry.type === "movie" ? <Film className="w-3 h-3" /> : <Tv className="w-3 h-3" />}
                           {entry.type === "movie" ? "Movie" : "TV Show"}
                         </Badge>
                       </TableCell>
-                      <TableCell className="text-gray-300">{entry.director}</TableCell>
-                      <TableCell className="text-gray-300">{entry.genre}</TableCell>
-                      <TableCell className="text-gray-300">
+                      <TableCell className="text-gray-700">{entry.director}</TableCell>
+                      <TableCell className="text-gray-700">{entry.genre}</TableCell>
+                      <TableCell className="text-gray-700">
                         {entry.budget ? (
                           <div className="flex items-center gap-1">
                             <DollarSign className="w-3 h-3" />
                             {(entry.budget / 1000000).toFixed(1)}M
                           </div>
                         ) : (
-                          <span className="text-gray-500">-</span>
+                          <span className="text-gray-400">-</span>
                         )}
                       </TableCell>
-                      <TableCell className="text-gray-300">
+                      <TableCell className="text-gray-700">
                         <div className="flex items-center gap-1">
                           <Clock className="w-3 h-3" />
                           {entry.duration}m
                         </div>
                       </TableCell>
                       <TableCell>
-                        <div className="flex items-center gap-1 text-yellow-400">
-                          <Star className="w-4 h-4 fill-yellow-400" />
-                          <span className="text-white">{entry.rating.toFixed(1)}</span>
+                        <div className="flex items-center gap-1 text-yellow-500">
+                          <Star className="w-4 h-4 fill-yellow-500" />
+                          <span className="text-gray-900 font-semibold">{entry.rating.toFixed(1)}</span>
                         </div>
                       </TableCell>
                       <TableCell>
@@ -402,7 +402,7 @@ export default function DashboardPage() {
                             size="sm"
                             variant="ghost"
                             onClick={() => openEditDialog(entry)}
-                            className="text-blue-400 hover:text-blue-300 hover:bg-blue-400/10"
+                            className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 btn-animated"
                           >
                             <Edit className="w-4 h-4" />
                           </Button>
@@ -410,7 +410,7 @@ export default function DashboardPage() {
                             size="sm"
                             variant="ghost"
                             onClick={() => openDeleteDialog(entry)}
-                            className="text-red-400 hover:text-red-300 hover:bg-red-400/10"
+                            className="text-red-600 hover:text-red-700 hover:bg-red-50 btn-animated"
                           >
                             <Trash2 className="w-4 h-4" />
                           </Button>
@@ -424,7 +424,7 @@ export default function DashboardPage() {
             
             {isLoading && (
               <div className="py-8 text-center">
-                <Loader2 className="w-8 h-8 text-red-500 animate-spin mx-auto" />
+                <Loader2 className="w-8 h-8 text-blue-600 animate-spin mx-auto" />
               </div>
             )}
             
@@ -435,96 +435,96 @@ export default function DashboardPage() {
 
       {/* Add Dialog */}
       <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-        <DialogContent className="bg-black/90 border-white/10 text-white max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="bg-white border-gray-200 text-gray-900 max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-2xl">Add New Entry</DialogTitle>
-            <DialogDescription className="text-gray-400">
+            <DialogTitle className="text-2xl font-bold gradient-text">Add New Entry</DialogTitle>
+            <DialogDescription className="text-gray-600">
               Add a new movie or TV show to your collection
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid gap-2">
-              <Label htmlFor="add-title">Title *</Label>
+              <Label htmlFor="add-title" className="font-bold text-gray-900">Title *</Label>
               <Input
                 id="add-title"
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                className="bg-white/5 border-white/10 text-white"
+                className="bg-white border-gray-300 text-gray-900"
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="add-type">Type *</Label>
+                <Label htmlFor="add-type" className="font-bold text-gray-900">Type *</Label>
                 <Select value={formData.type} onValueChange={(value: "movie" | "tv_show") => setFormData({ ...formData, type: value })}>
-                  <SelectTrigger className="bg-white/5 border-white/10 text-white">
+                  <SelectTrigger className="bg-white border-gray-300 text-gray-900">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-black/90 border-white/10">
+                  <SelectContent className="bg-gray-50 border-gray-300">
                     <SelectItem value="movie">Movie</SelectItem>
                     <SelectItem value="tv_show">TV Show</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="add-director">Director *</Label>
+                <Label htmlFor="add-director" className="font-bold text-gray-900">Director *</Label>
                 <Input
                   id="add-director"
                   value={formData.director}
                   onChange={(e) => setFormData({ ...formData, director: e.target.value })}
-                  className="bg-white/5 border-white/10 text-white"
+                  className="bg-white border-gray-300 text-gray-900"
                   placeholder="e.g., Christopher Nolan"
                 />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="add-genre">Genre *</Label>
+                <Label htmlFor="add-genre" className="font-bold text-gray-900">Genre *</Label>
                 <Input
                   id="add-genre"
                   value={formData.genre}
                   onChange={(e) => setFormData({ ...formData, genre: e.target.value })}
-                  className="bg-white/5 border-white/10 text-white"
+                  className="bg-white border-gray-300 text-gray-900"
                   placeholder="e.g., Drama, Action, Comedy"
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="add-year">Release Year *</Label>
+                <Label htmlFor="add-year" className="font-bold text-gray-900">Release Year *</Label>
                 <Input
                   id="add-year"
                   type="number"
                   value={formData.releaseYear}
                   onChange={(e) => setFormData({ ...formData, releaseYear: parseInt(e.target.value) })}
-                  className="bg-white/5 border-white/10 text-white"
+                  className="bg-white border-gray-300 text-gray-900"
                 />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="add-budget">Budget ($)</Label>
+                <Label htmlFor="add-budget" className="font-bold text-gray-900">Budget ($)</Label>
                 <Input
                   id="add-budget"
                   type="number"
                   value={formData.budget || ""}
                   onChange={(e) => setFormData({ ...formData, budget: e.target.value ? parseFloat(e.target.value) : null })}
-                  className="bg-white/5 border-white/10 text-white"
+                  className="bg-white border-gray-300 text-gray-900"
                   placeholder="e.g., 15000000"
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="add-duration">Duration (minutes) *</Label>
+                <Label htmlFor="add-duration" className="font-bold text-gray-900">Duration (minutes) *</Label>
                 <Input
                   id="add-duration"
                   type="number"
                   value={formData.duration}
                   onChange={(e) => setFormData({ ...formData, duration: parseInt(e.target.value) })}
-                  className="bg-white/5 border-white/10 text-white"
+                  className="bg-white border-gray-300 text-gray-900"
                   placeholder="e.g., 142"
                 />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="add-rating">Rating (0-10) *</Label>
+                <Label htmlFor="add-rating" className="font-bold text-gray-900">Rating (0-10) *</Label>
                 <Input
                   id="add-rating"
                   type="number"
@@ -533,28 +533,28 @@ export default function DashboardPage() {
                   max="10"
                   value={formData.rating}
                   onChange={(e) => setFormData({ ...formData, rating: parseFloat(e.target.value) })}
-                  className="bg-white/5 border-white/10 text-white"
+                  className="bg-white border-gray-300 text-gray-900"
                   placeholder="e.g., 8.5"
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="add-location">Location</Label>
+                <Label htmlFor="add-location" className="font-bold text-gray-900">Location</Label>
                 <Input
                   id="add-location"
                   value={formData.location}
                   onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                  className="bg-white/5 border-white/10 text-white"
+                  className="bg-white border-gray-300 text-gray-900"
                   placeholder="e.g., Hollywood, California"
                 />
               </div>
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="add-image">Poster URL</Label>
+              <Label htmlFor="add-image" className="font-bold text-gray-900">Poster URL</Label>
               <Input
                 id="add-image"
                 value={formData.imageUrl}
                 onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                className="bg-white/5 border-white/10 text-white"
+                className="bg-white border-gray-300 text-gray-900"
                 placeholder="https://example.com/poster.jpg"
               />
               {formData.imageUrl && (
@@ -562,7 +562,7 @@ export default function DashboardPage() {
                   <img
                     src={formData.imageUrl}
                     alt="Preview"
-                    className="w-24 h-24 object-cover rounded border border-white/10"
+                    className="w-24 h-24 object-cover rounded border border-gray-300"
                     onError={(e) => {
                       e.currentTarget.style.display = 'none';
                     }}
@@ -571,21 +571,21 @@ export default function DashboardPage() {
               )}
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="add-description">Description *</Label>
+              <Label htmlFor="add-description" className="font-bold text-gray-900">Description *</Label>
               <Textarea
                 id="add-description"
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                className="bg-white/5 border-white/10 text-white min-h-[100px]"
+                className="bg-white border-gray-300 text-gray-900 min-h-[100px]"
                 placeholder="Enter a brief description..."
               />
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsAddDialogOpen(false)} className="border-white/10">
+            <Button variant="outline" onClick={() => setIsAddDialogOpen(false)} className="border-gray-300 btn-animated">
               Cancel
             </Button>
-            <Button onClick={handleAddEntry} disabled={isSubmitting} className="bg-red-600 hover:bg-red-700">
+            <Button onClick={handleAddEntry} disabled={isSubmitting} className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white btn-animated">
               {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : "Add Entry"}
             </Button>
           </DialogFooter>
@@ -594,96 +594,96 @@ export default function DashboardPage() {
 
       {/* Edit Dialog */}
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className="bg-black/90 border-white/10 text-white max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="bg-white border-gray-200 text-gray-900 max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-2xl">Edit Entry</DialogTitle>
-            <DialogDescription className="text-gray-400">
+            <DialogTitle className="text-2xl font-bold gradient-text">Edit Entry</DialogTitle>
+            <DialogDescription className="text-gray-600">
               Update the details of your entry
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid gap-2">
-              <Label htmlFor="edit-title">Title *</Label>
+              <Label htmlFor="edit-title" className="font-bold text-gray-900">Title *</Label>
               <Input
                 id="edit-title"
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                className="bg-white/5 border-white/10 text-white"
+                className="bg-white border-gray-300 text-gray-900"
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="edit-type">Type *</Label>
+                <Label htmlFor="edit-type" className="font-bold text-gray-900">Type *</Label>
                 <Select value={formData.type} onValueChange={(value: "movie" | "tv_show") => setFormData({ ...formData, type: value })}>
-                  <SelectTrigger className="bg-white/5 border-white/10 text-white">
+                  <SelectTrigger className="bg-white border-gray-300 text-gray-900">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-black/90 border-white/10">
+                  <SelectContent className="bg-gray-50 border-gray-300">
                     <SelectItem value="movie">Movie</SelectItem>
                     <SelectItem value="tv_show">TV Show</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="edit-director">Director *</Label>
+                <Label htmlFor="edit-director" className="font-bold text-gray-900">Director *</Label>
                 <Input
                   id="edit-director"
                   value={formData.director}
                   onChange={(e) => setFormData({ ...formData, director: e.target.value })}
-                  className="bg-white/5 border-white/10 text-white"
+                  className="bg-white border-gray-300 text-gray-900"
                   placeholder="e.g., Christopher Nolan"
                 />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="edit-genre">Genre *</Label>
+                <Label htmlFor="edit-genre" className="font-bold text-gray-900">Genre *</Label>
                 <Input
                   id="edit-genre"
                   value={formData.genre}
                   onChange={(e) => setFormData({ ...formData, genre: e.target.value })}
-                  className="bg-white/5 border-white/10 text-white"
+                  className="bg-white border-gray-300 text-gray-900"
                   placeholder="e.g., Drama, Action, Comedy"
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="edit-year">Release Year *</Label>
+                <Label htmlFor="edit-year" className="font-bold text-gray-900">Release Year *</Label>
                 <Input
                   id="edit-year"
                   type="number"
                   value={formData.releaseYear}
                   onChange={(e) => setFormData({ ...formData, releaseYear: parseInt(e.target.value) })}
-                  className="bg-white/5 border-white/10 text-white"
+                  className="bg-white border-gray-300 text-gray-900"
                 />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="edit-budget">Budget ($)</Label>
+                <Label htmlFor="edit-budget" className="font-bold text-gray-900">Budget ($)</Label>
                 <Input
                   id="edit-budget"
                   type="number"
                   value={formData.budget || ""}
                   onChange={(e) => setFormData({ ...formData, budget: e.target.value ? parseFloat(e.target.value) : null })}
-                  className="bg-white/5 border-white/10 text-white"
+                  className="bg-white border-gray-300 text-gray-900"
                   placeholder="e.g., 15000000"
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="edit-duration">Duration (minutes) *</Label>
+                <Label htmlFor="edit-duration" className="font-bold text-gray-900">Duration (minutes) *</Label>
                 <Input
                   id="edit-duration"
                   type="number"
                   value={formData.duration}
                   onChange={(e) => setFormData({ ...formData, duration: parseInt(e.target.value) })}
-                  className="bg-white/5 border-white/10 text-white"
+                  className="bg-white border-gray-300 text-gray-900"
                   placeholder="e.g., 142"
                 />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="edit-rating">Rating (0-10) *</Label>
+                <Label htmlFor="edit-rating" className="font-bold text-gray-900">Rating (0-10) *</Label>
                 <Input
                   id="edit-rating"
                   type="number"
@@ -692,28 +692,28 @@ export default function DashboardPage() {
                   max="10"
                   value={formData.rating}
                   onChange={(e) => setFormData({ ...formData, rating: parseFloat(e.target.value) })}
-                  className="bg-white/5 border-white/10 text-white"
+                  className="bg-white border-gray-300 text-gray-900"
                   placeholder="e.g., 8.5"
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="edit-location">Location</Label>
+                <Label htmlFor="edit-location" className="font-bold text-gray-900">Location</Label>
                 <Input
                   id="edit-location"
                   value={formData.location}
                   onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                  className="bg-white/5 border-white/10 text-white"
+                  className="bg-white border-gray-300 text-gray-900"
                   placeholder="e.g., Hollywood, California"
                 />
               </div>
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="edit-image">Poster URL</Label>
+              <Label htmlFor="edit-image" className="font-bold text-gray-900">Poster URL</Label>
               <Input
                 id="edit-image"
                 value={formData.imageUrl}
                 onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                className="bg-white/5 border-white/10 text-white"
+                className="bg-white border-gray-300 text-gray-900"
                 placeholder="https://example.com/poster.jpg"
               />
               {formData.imageUrl && (
@@ -721,7 +721,7 @@ export default function DashboardPage() {
                   <img
                     src={formData.imageUrl}
                     alt="Preview"
-                    className="w-24 h-24 object-cover rounded border border-white/10"
+                    className="w-24 h-24 object-cover rounded border border-gray-300"
                     onError={(e) => {
                       e.currentTarget.style.display = 'none';
                     }}
@@ -730,21 +730,21 @@ export default function DashboardPage() {
               )}
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="edit-description">Description *</Label>
+              <Label htmlFor="edit-description" className="font-bold text-gray-900">Description *</Label>
               <Textarea
                 id="edit-description"
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                className="bg-white/5 border-white/10 text-white min-h-[100px]"
+                className="bg-white border-gray-300 text-gray-900 min-h-[100px]"
                 placeholder="Enter a brief description..."
               />
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsEditDialogOpen(false)} className="border-white/10">
+            <Button variant="outline" onClick={() => setIsEditDialogOpen(false)} className="border-gray-300 btn-animated">
               Cancel
             </Button>
-            <Button onClick={handleEditEntry} disabled={isSubmitting} className="bg-red-600 hover:bg-red-700">
+            <Button onClick={handleEditEntry} disabled={isSubmitting} className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white btn-animated">
               {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : "Save Changes"}
             </Button>
           </DialogFooter>
@@ -753,19 +753,19 @@ export default function DashboardPage() {
 
       {/* Delete Confirmation Dialog */}
       <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-        <AlertDialogContent className="bg-black/90 border-white/10">
+        <AlertDialogContent className="bg-white border-gray-200">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-white">Are you sure?</AlertDialogTitle>
-            <AlertDialogDescription className="text-gray-400">
+            <AlertDialogTitle className="text-gray-900">Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription className="text-gray-600">
               This action cannot be undone. This will permanently delete "{selectedEntry?.title}" from your collection.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="border-white/10">Cancel</AlertDialogCancel>
+            <AlertDialogCancel className="border-gray-300 btn-animated">Cancel</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDeleteEntry}
               disabled={isSubmitting}
-              className="bg-red-600 hover:bg-red-700"
+              className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white btn-animated"
             >
               {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : "Delete"}
             </AlertDialogAction>

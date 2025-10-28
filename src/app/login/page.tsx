@@ -47,24 +47,24 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen netflix-gradient flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen light-gradient flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         <Link href="/" className="flex items-center gap-2 justify-center mb-8">
-          <Film className="w-10 h-10 text-red-500" />
-          <span className="text-3xl font-bold text-white">MovieFlix</span>
+          <Film className="w-10 h-10 text-blue-600" />
+          <span className="text-3xl font-bold gradient-text">MovieFlix</span>
         </Link>
 
-        <Card className="bg-black/60 border-white/10 backdrop-blur-lg">
+        <Card className="bg-white border-gray-200 shadow-lg">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-3xl font-bold text-white">Welcome back</CardTitle>
-            <CardDescription className="text-gray-400">
+            <CardTitle className="text-3xl font-bold gradient-text">Welcome back</CardTitle>
+            <CardDescription className="text-gray-600">
               Enter your credentials to access your account
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-white">Email</Label>
+                <Label htmlFor="email" className="text-gray-900 font-bold">Email</Label>
                 <Input
                   id="email"
                   type="email"
@@ -73,11 +73,11 @@ export default function LoginPage() {
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   required
                   disabled={isLoading}
-                  className="bg-white/5 border-white/10 text-white placeholder:text-gray-500"
+                  className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-400"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-white">Password</Label>
+                <Label htmlFor="password" className="text-gray-900 font-bold">Password</Label>
                 <Input
                   id="password"
                   type="password"
@@ -86,7 +86,7 @@ export default function LoginPage() {
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   required
                   disabled={isLoading}
-                  className="bg-white/5 border-white/10 text-white placeholder:text-gray-500"
+                  className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-400"
                 />
               </div>
               <div className="flex items-center space-x-2">
@@ -96,15 +96,15 @@ export default function LoginPage() {
                   checked={formData.rememberMe}
                   onChange={(e) => setFormData({ ...formData, rememberMe: e.target.checked })}
                   disabled={isLoading}
-                  className="rounded border-white/10"
+                  className="rounded border-gray-300"
                 />
-                <Label htmlFor="remember" className="text-sm text-gray-400 cursor-pointer">
+                <Label htmlFor="remember" className="text-sm text-gray-600 cursor-pointer">
                   Remember me
                 </Label>
               </div>
               <Button
                 type="submit"
-                className="w-full bg-red-600 hover:bg-red-700 text-white"
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white btn-animated"
                 disabled={isLoading}
               >
                 {isLoading ? (
@@ -119,13 +119,13 @@ export default function LoginPage() {
             </form>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
-            <div className="text-sm text-gray-400 text-center">
+            <div className="text-sm text-gray-600 text-center">
               Don't have an account?{" "}
-              <Link href="/signup" className="text-red-500 hover:text-red-400 font-medium">
+              <Link href="/signup" className="text-blue-600 hover:text-purple-600 font-medium">
                 Sign up
               </Link>
             </div>
-            <Link href="/" className="text-sm text-gray-400 hover:text-white text-center">
+            <Link href="/" className="text-sm text-gray-600 hover:text-gray-900 text-center">
               ← Back to home
             </Link>
           </CardFooter>

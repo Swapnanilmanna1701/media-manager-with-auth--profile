@@ -72,24 +72,24 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen netflix-gradient flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen light-gradient flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         <Link href="/" className="flex items-center gap-2 justify-center mb-8">
-          <Film className="w-10 h-10 text-red-500" />
-          <span className="text-3xl font-bold text-white">MovieFlix</span>
+          <Film className="w-10 h-10 text-blue-600" />
+          <span className="text-3xl font-bold gradient-text">MovieFlix</span>
         </Link>
 
-        <Card className="bg-black/60 border-white/10 backdrop-blur-lg">
+        <Card className="bg-white border-gray-200 shadow-lg">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-3xl font-bold text-white">Create an account</CardTitle>
-            <CardDescription className="text-gray-400">
+            <CardTitle className="text-3xl font-bold gradient-text">Create an account</CardTitle>
+            <CardDescription className="text-gray-600">
               Enter your information to get started
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="name" className="text-white">Name</Label>
+                <Label htmlFor="name" className="text-gray-900 font-bold">Name</Label>
                 <Input
                   id="name"
                   type="text"
@@ -98,11 +98,11 @@ export default function SignupPage() {
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   required
                   disabled={isLoading}
-                  className="bg-white/5 border-white/10 text-white placeholder:text-gray-500"
+                  className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-400"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-white">Email</Label>
+                <Label htmlFor="email" className="text-gray-900 font-bold">Email</Label>
                 <Input
                   id="email"
                   type="email"
@@ -111,11 +111,11 @@ export default function SignupPage() {
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   required
                   disabled={isLoading}
-                  className="bg-white/5 border-white/10 text-white placeholder:text-gray-500"
+                  className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-400"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-white">Password</Label>
+                <Label htmlFor="password" className="text-gray-900 font-bold">Password</Label>
                 <Input
                   id="password"
                   type="password"
@@ -124,11 +124,11 @@ export default function SignupPage() {
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   required
                   disabled={isLoading}
-                  className="bg-white/5 border-white/10 text-white placeholder:text-gray-500"
+                  className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-400"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="confirmPassword" className="text-white">Confirm Password</Label>
+                <Label htmlFor="confirmPassword" className="text-gray-900 font-bold">Confirm Password</Label>
                 <Input
                   id="confirmPassword"
                   type="password"
@@ -137,12 +137,12 @@ export default function SignupPage() {
                   onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
                   required
                   disabled={isLoading}
-                  className="bg-white/5 border-white/10 text-white placeholder:text-gray-500"
+                  className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-400"
                 />
               </div>
               <Button
                 type="submit"
-                className="w-full bg-red-600 hover:bg-red-700 text-white"
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white btn-animated"
                 disabled={isLoading}
               >
                 {isLoading ? (
@@ -157,13 +157,13 @@ export default function SignupPage() {
             </form>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
-            <div className="text-sm text-gray-400 text-center">
+            <div className="text-sm text-gray-600 text-center">
               Already have an account?{" "}
-              <Link href="/login" className="text-red-500 hover:text-red-400 font-medium">
+              <Link href="/login" className="text-blue-600 hover:text-purple-600 font-medium">
                 Sign in
               </Link>
             </div>
-            <Link href="/" className="text-sm text-gray-400 hover:text-white text-center">
+            <Link href="/" className="text-sm text-gray-600 hover:text-gray-900 text-center">
               ← Back to home
             </Link>
           </CardFooter>
