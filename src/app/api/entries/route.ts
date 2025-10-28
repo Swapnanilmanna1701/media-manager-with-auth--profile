@@ -14,6 +14,10 @@ const entrySchema = z.object({
   rating: z.number().min(0).max(10),
   description: z.string().min(1, 'Description is required'),
   imageUrl: z.string().optional(),
+  director: z.string().min(1, 'Director is required'),
+  budget: z.number().optional(),
+  duration: z.number().int().min(1, 'Duration must be at least 1 minute'),
+  location: z.string().optional(),
 });
 
 // GET - List entries with pagination

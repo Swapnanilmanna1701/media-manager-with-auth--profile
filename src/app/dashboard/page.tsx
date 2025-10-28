@@ -14,7 +14,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { Plus, Edit, Trash2, Film, Tv, Star, Loader2 } from "lucide-react";
+import { Plus, Edit, Trash2, Film, Tv, Star, Loader2, Clock, DollarSign } from "lucide-react";
 import { toast } from "sonner";
 
 type Entry = {
@@ -26,6 +26,10 @@ type Entry = {
   rating: number;
   description: string;
   imageUrl: string | null;
+  director: string;
+  budget: number | null;
+  duration: number;
+  location: string | null;
   userId: string;
   createdAt: Date;
   updatedAt: Date;
@@ -39,6 +43,10 @@ type FormData = {
   rating: number;
   description: string;
   imageUrl: string;
+  director: string;
+  budget: number | null;
+  duration: number;
+  location: string;
 };
 
 export default function DashboardPage() {
@@ -64,6 +72,10 @@ export default function DashboardPage() {
     rating: 5,
     description: "",
     imageUrl: "",
+    director: "",
+    budget: null,
+    duration: 120,
+    location: "",
   });
 
   const observerTarget = useRef<HTMLDivElement>(null);
@@ -140,7 +152,11 @@ export default function DashboardPage() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          budget: formData.budget || undefined,
+          location: formData.location || undefined,
+        }),
       });
 
       if (response.ok) {
@@ -173,7 +189,11 @@ export default function DashboardPage() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          budget: formData.budget || undefined,
+          location: formData.location || undefined,
+        }),
       });
 
       if (response.ok) {
@@ -235,6 +255,10 @@ export default function DashboardPage() {
       rating: entry.rating,
       description: entry.description,
       imageUrl: entry.imageUrl || "",
+      director: entry.director,
+      budget: entry.budget,
+      duration: entry.duration,
+      location: entry.location || "",
     });
     setIsEditDialogOpen(true);
   };
@@ -253,6 +277,10 @@ export default function DashboardPage() {
       rating: 5,
       description: "",
       imageUrl: "",
+      director: "",
+      budget: null,
+      duration: 120,
+      location: "",
     });
   };
 
@@ -312,8 +340,10 @@ export default function DashboardPage() {
                   <TableRow className="border-white/10 hover:bg-white/5">
                     <TableHead className="text-gray-400">Title</TableHead>
                     <TableHead className="text-gray-400">Type</TableHead>
+                    <TableHead className="text-gray-400">Director</TableHead>
                     <TableHead className="text-gray-400">Genre</TableHead>
-                    <TableHead className="text-gray-400">Year</TableHead>
+                    <TableHead className="text-gray-400">Budget</TableHead>
+                    <TableHead className="text-gray-400">Duration</TableHead>
                     <TableHead className="text-gray-400">Rating</TableHead>
                     <TableHead className="text-gray-400">Actions</TableHead>
                   </TableRow>
@@ -328,8 +358,24 @@ export default function DashboardPage() {
                           {entry.type === "movie" ? "Movie" : "TV Show"}
                         </Badge>
                       </TableCell>
+                      <TableCell className="text-gray-300">{entry.director}</TableCell>
                       <TableCell className="text-gray-300">{entry.genre}</TableCell>
-                      <TableCell className="text-gray-300">{entry.releaseYear}</TableCell>
+                      <TableCell className="text-gray-300">
+                        {entry.budget ? (
+                          <div className="flex items-center gap-1">
+                            <DollarSign className="w-3 h-3" />
+                            {(entry.budget / 1000000).toFixed(1)}M
+                          </div>
+                        ) : (
+                          <span className="text-gray-500">-</span>
+                        )}
+                      </TableCell>
+                      <TableCell className="text-gray-300">
+                        <div className="flex items-center gap-1">
+                          <Clock className="w-3 h-3" />
+                          {entry.duration}m
+                        </div>
+                      </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-1 text-yellow-400">
                           <Star className="w-4 h-4 fill-yellow-400" />
@@ -375,7 +421,7 @@ export default function DashboardPage() {
 
       {/* Add Dialog */}
       <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-        <DialogContent className="bg-black/90 border-white/10 text-white max-w-2xl">
+        <DialogContent className="bg-black/90 border-white/10 text-white max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-2xl">Add New Entry</DialogTitle>
             <DialogDescription className="text-gray-400">
@@ -384,7 +430,7 @@ export default function DashboardPage() {
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid gap-2">
-              <Label htmlFor="add-title">Title</Label>
+              <Label htmlFor="add-title">Title *</Label>
               <Input
                 id="add-title"
                 value={formData.title}
@@ -394,7 +440,7 @@ export default function DashboardPage() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="add-type">Type</Label>
+                <Label htmlFor="add-type">Type *</Label>
                 <Select value={formData.type} onValueChange={(value: "movie" | "tv_show") => setFormData({ ...formData, type: value })}>
                   <SelectTrigger className="bg-white/5 border-white/10 text-white">
                     <SelectValue />
@@ -406,18 +452,29 @@ export default function DashboardPage() {
                 </Select>
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="add-genre">Genre</Label>
+                <Label htmlFor="add-director">Director *</Label>
                 <Input
-                  id="add-genre"
-                  value={formData.genre}
-                  onChange={(e) => setFormData({ ...formData, genre: e.target.value })}
+                  id="add-director"
+                  value={formData.director}
+                  onChange={(e) => setFormData({ ...formData, director: e.target.value })}
                   className="bg-white/5 border-white/10 text-white"
+                  placeholder="e.g., Christopher Nolan"
                 />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="add-year">Release Year</Label>
+                <Label htmlFor="add-genre">Genre *</Label>
+                <Input
+                  id="add-genre"
+                  value={formData.genre}
+                  onChange={(e) => setFormData({ ...formData, genre: e.target.value })}
+                  className="bg-white/5 border-white/10 text-white"
+                  placeholder="e.g., Drama, Action, Comedy"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="add-year">Release Year *</Label>
                 <Input
                   id="add-year"
                   type="number"
@@ -426,8 +483,34 @@ export default function DashboardPage() {
                   className="bg-white/5 border-white/10 text-white"
                 />
               </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="add-rating">Rating (0-10)</Label>
+                <Label htmlFor="add-budget">Budget ($)</Label>
+                <Input
+                  id="add-budget"
+                  type="number"
+                  value={formData.budget || ""}
+                  onChange={(e) => setFormData({ ...formData, budget: e.target.value ? parseFloat(e.target.value) : null })}
+                  className="bg-white/5 border-white/10 text-white"
+                  placeholder="e.g., 15000000"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="add-duration">Duration (minutes) *</Label>
+                <Input
+                  id="add-duration"
+                  type="number"
+                  value={formData.duration}
+                  onChange={(e) => setFormData({ ...formData, duration: parseInt(e.target.value) })}
+                  className="bg-white/5 border-white/10 text-white"
+                  placeholder="e.g., 142"
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="add-rating">Rating (0-10) *</Label>
                 <Input
                   id="add-rating"
                   type="number"
@@ -437,26 +520,38 @@ export default function DashboardPage() {
                   value={formData.rating}
                   onChange={(e) => setFormData({ ...formData, rating: parseFloat(e.target.value) })}
                   className="bg-white/5 border-white/10 text-white"
+                  placeholder="e.g., 8.5"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="add-location">Location</Label>
+                <Input
+                  id="add-location"
+                  value={formData.location}
+                  onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                  className="bg-white/5 border-white/10 text-white"
+                  placeholder="e.g., Hollywood, California"
                 />
               </div>
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="add-image">Image URL (optional)</Label>
+              <Label htmlFor="add-image">Poster URL</Label>
               <Input
                 id="add-image"
                 value={formData.imageUrl}
                 onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
                 className="bg-white/5 border-white/10 text-white"
-                placeholder="https://example.com/image.jpg"
+                placeholder="https://example.com/poster.jpg"
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="add-description">Description</Label>
+              <Label htmlFor="add-description">Description *</Label>
               <Textarea
                 id="add-description"
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 className="bg-white/5 border-white/10 text-white min-h-[100px]"
+                placeholder="Enter a brief description..."
               />
             </div>
           </div>
@@ -473,7 +568,7 @@ export default function DashboardPage() {
 
       {/* Edit Dialog */}
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className="bg-black/90 border-white/10 text-white max-w-2xl">
+        <DialogContent className="bg-black/90 border-white/10 text-white max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-2xl">Edit Entry</DialogTitle>
             <DialogDescription className="text-gray-400">
@@ -482,7 +577,7 @@ export default function DashboardPage() {
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid gap-2">
-              <Label htmlFor="edit-title">Title</Label>
+              <Label htmlFor="edit-title">Title *</Label>
               <Input
                 id="edit-title"
                 value={formData.title}
@@ -492,7 +587,7 @@ export default function DashboardPage() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="edit-type">Type</Label>
+                <Label htmlFor="edit-type">Type *</Label>
                 <Select value={formData.type} onValueChange={(value: "movie" | "tv_show") => setFormData({ ...formData, type: value })}>
                   <SelectTrigger className="bg-white/5 border-white/10 text-white">
                     <SelectValue />
@@ -504,18 +599,29 @@ export default function DashboardPage() {
                 </Select>
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="edit-genre">Genre</Label>
+                <Label htmlFor="edit-director">Director *</Label>
                 <Input
-                  id="edit-genre"
-                  value={formData.genre}
-                  onChange={(e) => setFormData({ ...formData, genre: e.target.value })}
+                  id="edit-director"
+                  value={formData.director}
+                  onChange={(e) => setFormData({ ...formData, director: e.target.value })}
                   className="bg-white/5 border-white/10 text-white"
+                  placeholder="e.g., Christopher Nolan"
                 />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="edit-year">Release Year</Label>
+                <Label htmlFor="edit-genre">Genre *</Label>
+                <Input
+                  id="edit-genre"
+                  value={formData.genre}
+                  onChange={(e) => setFormData({ ...formData, genre: e.target.value })}
+                  className="bg-white/5 border-white/10 text-white"
+                  placeholder="e.g., Drama, Action, Comedy"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="edit-year">Release Year *</Label>
                 <Input
                   id="edit-year"
                   type="number"
@@ -524,8 +630,34 @@ export default function DashboardPage() {
                   className="bg-white/5 border-white/10 text-white"
                 />
               </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="edit-rating">Rating (0-10)</Label>
+                <Label htmlFor="edit-budget">Budget ($)</Label>
+                <Input
+                  id="edit-budget"
+                  type="number"
+                  value={formData.budget || ""}
+                  onChange={(e) => setFormData({ ...formData, budget: e.target.value ? parseFloat(e.target.value) : null })}
+                  className="bg-white/5 border-white/10 text-white"
+                  placeholder="e.g., 15000000"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="edit-duration">Duration (minutes) *</Label>
+                <Input
+                  id="edit-duration"
+                  type="number"
+                  value={formData.duration}
+                  onChange={(e) => setFormData({ ...formData, duration: parseInt(e.target.value) })}
+                  className="bg-white/5 border-white/10 text-white"
+                  placeholder="e.g., 142"
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="edit-rating">Rating (0-10) *</Label>
                 <Input
                   id="edit-rating"
                   type="number"
@@ -535,26 +667,38 @@ export default function DashboardPage() {
                   value={formData.rating}
                   onChange={(e) => setFormData({ ...formData, rating: parseFloat(e.target.value) })}
                   className="bg-white/5 border-white/10 text-white"
+                  placeholder="e.g., 8.5"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="edit-location">Location</Label>
+                <Input
+                  id="edit-location"
+                  value={formData.location}
+                  onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                  className="bg-white/5 border-white/10 text-white"
+                  placeholder="e.g., Hollywood, California"
                 />
               </div>
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="edit-image">Image URL (optional)</Label>
+              <Label htmlFor="edit-image">Poster URL</Label>
               <Input
                 id="edit-image"
                 value={formData.imageUrl}
                 onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
                 className="bg-white/5 border-white/10 text-white"
-                placeholder="https://example.com/image.jpg"
+                placeholder="https://example.com/poster.jpg"
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="edit-description">Description</Label>
+              <Label htmlFor="edit-description">Description *</Label>
               <Textarea
                 id="edit-description"
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 className="bg-white/5 border-white/10 text-white min-h-[100px]"
+                placeholder="Enter a brief description..."
               />
             </div>
           </div>

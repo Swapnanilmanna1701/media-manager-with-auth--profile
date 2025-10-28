@@ -8,6 +8,13 @@
       "when": 1761662566278,
       "tag": "0000_rich_wrecker",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1761663443891,
+      "tag": "0001_left_kitty_pryde",
+      "breakpoints": true
     }
   ]
 }

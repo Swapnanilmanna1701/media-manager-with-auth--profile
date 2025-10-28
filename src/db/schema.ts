@@ -77,6 +77,10 @@ export const entries = sqliteTable("entries", {
   rating: real("rating").notNull(),
   description: text("description").notNull(),
   imageUrl: text("image_url"),
+  director: text("director").notNull(),
+  budget: real("budget"),
+  duration: integer("duration").notNull(),
+  location: text("location"),
   userId: text("user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
