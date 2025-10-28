@@ -14,7 +14,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { Plus, Edit, Trash2, Film, Tv, Star, Loader2, Clock, DollarSign } from "lucide-react";
+import { Plus, Edit, Trash2, Film, Tv, Star, Loader2, Clock, DollarSign, ImageIcon } from "lucide-react";
 import { toast } from "sonner";
 
 type Entry = {
@@ -338,6 +338,7 @@ export default function DashboardPage() {
               <Table>
                 <TableHeader>
                   <TableRow className="border-white/10 hover:bg-white/5">
+                    <TableHead className="text-gray-400 w-20">Poster</TableHead>
                     <TableHead className="text-gray-400">Title</TableHead>
                     <TableHead className="text-gray-400">Type</TableHead>
                     <TableHead className="text-gray-400">Director</TableHead>
@@ -351,6 +352,19 @@ export default function DashboardPage() {
                 <TableBody>
                   {entries.map((entry) => (
                     <TableRow key={entry.id} className="border-white/10 hover:bg-white/5">
+                      <TableCell>
+                        {entry.imageUrl ? (
+                          <img
+                            src={entry.imageUrl}
+                            alt={entry.title}
+                            className="w-12 h-12 object-cover rounded border border-white/10"
+                          />
+                        ) : (
+                          <div className="w-12 h-12 bg-white/5 rounded border border-white/10 flex items-center justify-center">
+                            <ImageIcon className="w-6 h-6 text-gray-500" />
+                          </div>
+                        )}
+                      </TableCell>
                       <TableCell className="font-medium text-white">{entry.title}</TableCell>
                       <TableCell>
                         <Badge variant={entry.type === "movie" ? "default" : "secondary"} className="flex items-center gap-1 w-fit">
@@ -543,6 +557,18 @@ export default function DashboardPage() {
                 className="bg-white/5 border-white/10 text-white"
                 placeholder="https://example.com/poster.jpg"
               />
+              {formData.imageUrl && (
+                <div className="mt-2">
+                  <img
+                    src={formData.imageUrl}
+                    alt="Preview"
+                    className="w-24 h-24 object-cover rounded border border-white/10"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
+                </div>
+              )}
             </div>
             <div className="grid gap-2">
               <Label htmlFor="add-description">Description *</Label>
@@ -690,6 +716,18 @@ export default function DashboardPage() {
                 className="bg-white/5 border-white/10 text-white"
                 placeholder="https://example.com/poster.jpg"
               />
+              {formData.imageUrl && (
+                <div className="mt-2">
+                  <img
+                    src={formData.imageUrl}
+                    alt="Preview"
+                    className="w-24 h-24 object-cover rounded border border-white/10"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
+                </div>
+              )}
             </div>
             <div className="grid gap-2">
               <Label htmlFor="edit-description">Description *</Label>
