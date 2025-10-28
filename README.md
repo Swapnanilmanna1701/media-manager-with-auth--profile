@@ -273,7 +273,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 Swapnanil Manna - [@yourtwitter](https://twitter.com/Swapnanilmanna1701)
 
-Project Link: [https://github.com/Swapnanilmanna1701/movie-management-app](https://github.com/Swapnanilmanna1701/movie-management-app)
+Project Link: [https://github.com/Swapnanilmanna1701/media-manager-with-auth--profile]([https://github.com/Swapnanilmanna1701/movie-management-app](https://github.com/Swapnanilmanna1701/media-manager-with-auth--profile))
 
 ---
 
